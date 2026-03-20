@@ -1,0 +1,29 @@
+<section class="dashboard">
+  <h1>NASA APOD</h1>
+
+  @if (loading()) {
+    <p class="status">Cargando datos...</p>
+  }
+
+  @if (!loading() && errorMessage()) {
+    <p class="status error">{{ errorMessage() }}</p>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <div class="grid">
+      @for (item of apods(); track item.date) {
+        <article class="card" [routerLink]="['/detail', item.date]">
+          <p class="date">{{ item.date }}</p>
+
+          @if (item.media_type === 'image') {
+            <img [src]="item.url" [alt]="item.title" />
+          } @else {
+            <div class="fallback">No es una imagen</div>
+          }
+
+          <h2>{{ item.title }}</h2>
+        </article>
+      }
+    </div>
+  }
+</section>
