@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApodItem } from '../model/apod-item.model';
 
 @Injectable({
@@ -16,25 +16,74 @@ export class NasaService {
     return this.http.get<ApodItem>(
       `${this.apiUrl}?api_key=${this.apiKey}&date=${date}`
     );
-  } // hace una peticion para un dia concreto
+  }
 
-  getLastDaysApods(days: number = 6): Observable<ApodItem[]> {
-    const dates = this.getLastNDates(days);
-    const requests = dates.map((date) => this.getApodByDate(date));
-    return forkJoin(requests);
-  } // Obtiene los datos de los últimos 6 días, genera 6 fechas
+  // Devuelve solo imágenes, nunca vídeos
+  getLastImageApods(count: number = 6): Observable<ApodItem[]> {
+    return new Observable<ApodItem[]>((observer) => {
+      const results: ApodItem[] = [];
 
-  private getLastNDates(days: number): string[] {
-    const dates: string[] = [];
+      const fetchNext = (daysBack: number) => {
+        const date = this.formatDate(this.subtractDays(new Date(), daysBack));
 
-    for (let i = 1; i <= days; i++) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      dates.push(this.formatDate(date));
-    }
+        this.getApodByDate(date).subscribe({
+          next: (data) => {
+            if (data.media_type === 'image') {
+              results.push(data);
+            }
 
-    return dates;
-  } // Genera un array de fechas en formato 'YYYY-MM-DD' para los últimos N días
+            if (results.length === count) {
+              observer.next(results);
+              observer.complete();
+            } else {
+              fetchNext(daysBack + 1);
+            }
+          },
+          error: () => {
+            // Si falla una fecha, seguir con la siguiente
+            fetchNext(daysBack + 1);
+          }
+        });
+      };
+
+      fetchNext(1);
+    });
+  }
+
+  // Busca una imagen válida más antigua que NO esté ya en pantalla
+  getReplacementImage(excludedDates: string[]): Observable<ApodItem> {
+    return new Observable<ApodItem>((observer) => {
+      const fetchNext = (daysBack: number) => {
+        const date = this.formatDate(this.subtractDays(new Date(), daysBack));
+
+        this.getApodByDate(date).subscribe({
+          next: (data) => {
+            const isImage = data.media_type === 'image';
+            const isExcluded = excludedDates.includes(data.date);
+
+            if (isImage && !isExcluded) {
+              observer.next(data);
+              observer.complete();
+            } else {
+              fetchNext(daysBack + 1);
+            }
+          },
+          error: () => {
+            // Si falla una fecha, seguir con la siguiente
+            fetchNext(daysBack + 1);
+          }
+        });
+      };
+
+      fetchNext(1);
+    });
+  }
+
+  private subtractDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() - days);
+    return result;
+  }
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -43,4 +92,4 @@ export class NasaService {
 
     return `${year}-${month}-${day}`;
   }
-} // convierte la fecha a formato
+}

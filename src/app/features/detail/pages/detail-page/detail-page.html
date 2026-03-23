@@ -1,2 +1,49 @@
-<h1>Detalle</h1>
-<p>Página de detalle en construcción.</p>
+<section class="detail">
+  <button class="back-button" (click)="goBack()">← Volver</button>
+
+  @if (loading()) {
+    <p class="status">Cargando detalle...</p>
+  }
+
+  @if (!loading() && errorMessage()) {
+    <p class="status error">{{ errorMessage() }}</p>
+  }
+
+  @if (!loading() && apod()) {
+    <article class="detail-card">
+      <p class="date">{{ apod()?.date }}</p>
+      <h1>{{ apod()?.title }}</h1>
+
+      @if (apod()?.media_type === 'image') {
+        @if (!imageFailed()) {
+          <img
+            [src]="apod()?.url"
+            [alt]="apod()?.title"
+            (error)="handleDetailImageError()"
+          />
+        } @else {
+          <div class="image-error-box">
+            No se ha podido cargar la imagen de este día.
+          </div>
+        }
+      } @else {
+        @if (apod()?.url?.endsWith('.mp4')) {
+          <video controls width="100%">
+            <source [src]="apod()?.url" type="video/mp4" />
+            Tu navegador no soporta vídeo HTML5.
+          </video>
+        } @else {
+          <iframe
+            [src]="safeVideoUrl()"
+            width="100%"
+            height="500"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        }
+      }
+
+      <p class="description">{{ apod()?.explanation }}</p>
+    </article>
+  }
+</section>

@@ -16,9 +16,15 @@
           <p class="date">{{ item.date }}</p>
 
           @if (item.media_type === 'image') {
-            <img [src]="item.url" [alt]="item.title" />
+            <img
+              [src]="item.url"
+              [alt]="item.title"
+              (error)="handleImageError(item)"
+            />
           } @else {
-            <div class="fallback">No es una imagen</div>
+            <div class="video-placeholder">
+              ▶ Vídeo disponible
+            </div>
           }
 
           <h2>{{ item.title }}</h2>

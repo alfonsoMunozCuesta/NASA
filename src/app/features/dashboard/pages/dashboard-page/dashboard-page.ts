@@ -20,9 +20,9 @@ export class DashboardPage implements OnInit {
   errorMessage = signal('');
 
   ngOnInit(): void {
-    this.nasaService.getLastDaysApods(6).subscribe({
+    this.nasaService.getLastImageApods(6).subscribe({
       next: (data) => {
-        this.apods.set(data);
+        this.apods.set(this.sortByDateDesc(data));
         this.loading.set(false);
       },
       error: () => {
@@ -30,5 +30,32 @@ export class DashboardPage implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  handleImageError(item: ApodItem): void {
+    const currentDates = this.apods().map((apod) => apod.date);
+
+    this.nasaService.getReplacementImage(currentDates).subscribe({
+      next: (replacement) => {
+        this.apods.update((items) =>
+          this.sortByDateDesc(
+            items.map((apod) =>
+              apod.date === item.date ? replacement : apod
+            )
+          )
+        );
+      },
+      error: () => {
+        this.apods.update((items) =>
+          items.filter((apod) => apod.date !== item.date)
+        );
+      }
+    });
+  }
+
+  private sortByDateDesc(items: ApodItem[]): ApodItem[] {
+    return [...items].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
   }
 }
