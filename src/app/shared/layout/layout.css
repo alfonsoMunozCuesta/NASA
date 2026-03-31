@@ -1,0 +1,139 @@
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app-header {
+  background-color: #0b3d91;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 20px;
+  text-align: center;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.header-subtitle {
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #e0e0e0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.language-btn {
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 10px;
+  transition: all 0.3s ease;
+}
+
+.language-btn:hover {
+  background-color: #357abd;
+  transform: scale(1.05);
+}
+
+.nasa-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.app-content {
+  flex: 1;
+  width: 100%;
+}
+
+.app-footer {
+  background-color: #0b3d91;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-footer p {
+  margin: 4px 0;
+}
+
+/* Tablet (768px y menos) */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 12px 24px;
+    gap: 30px;
+  }
+
+  .app-title {
+    font-size: 24px;
+  }
+
+  .nasa-logo {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Mobile (480px y menos) */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px 16px;
+    gap: 15px;
+  }
+
+  .app-title {
+    font-size: 20px;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+    display: none;
+  }
+
+  .nasa-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .app-footer {
+    padding: 12px 8px;
+  }
+
+  .app-footer p {
+    font-size: 12px;
+    margin: 2px 0;
+  }
+}

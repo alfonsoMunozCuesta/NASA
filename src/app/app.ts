@@ -1,12 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LayoutComponent } from './shared/layout/layout';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [LayoutComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('nasa-app');
+export class App implements OnInit {
+  private readonly translate = inject(TranslateService);
+
+  ngOnInit(): void {
+    this.translate.use('es');
+  }
 }
+

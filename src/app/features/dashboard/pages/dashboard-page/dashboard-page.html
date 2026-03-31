@@ -1,8 +1,6 @@
 <section class="dashboard">
-  <h1>NASA APOD</h1>
-
   @if (loading()) {
-    <p class="status">Cargando datos...</p>
+    <p class="status">{{ 'dashboard.loading' | translate }}</p>
   }
 
   @if (!loading() && errorMessage()) {
@@ -10,26 +8,23 @@
   }
 
   @if (!loading() && !errorMessage()) {
-    <div class="grid">
-      @for (item of apods(); track item.date) {
-        <article class="card" [routerLink]="['/detail', item.date]">
-          <p class="date">{{ item.date }}</p>
-
-          @if (item.media_type === 'image') {
-            <img
-              [src]="item.url"
-              [alt]="item.title"
-              (error)="handleImageError(item)"
-            />
-          } @else {
-            <div class="video-placeholder">
-              ▶ Vídeo disponible
-            </div>
-          }
-
-          <h2>{{ item.title }}</h2>
-        </article>
-      }
+    <div class="search-container">
+      <input
+        type="text"
+        class="search-input"
+        [placeholder]="'dashboard.searchPlaceholder' | translate"
+        [(ngModel)]="searchText"
+      />
     </div>
+
+    @if (filteredApods().length > 0) {
+      <div class="grid">
+        @for (item of filteredApods(); track item.date) {
+          <app-dashboard-card [item]="item"></app-dashboard-card>
+        }
+      </div>
+    } @else {
+      <p class="no-results">{{ 'dashboard.noResults' | translate }}</p>
+    }
   }
 </section>

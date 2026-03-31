@@ -1,0 +1,27 @@
+{
+    "header": {
+        "title": "NASA APOD",
+        "subtitle": "Where Earth ends, wonder begins."
+    },
+    
+    
+"dashboard": {
+    "searchPlaceholder": "Search by title...",
+    "loading": "Loading data...",
+    "noResults": "No results found for this search.",
+    "videoAvailable": "Video available"
+  },
+  "detail": {
+    "back": "Back",
+    "loading": "Loading detail...",
+    "imageError": "The image for this day could not be loaded."
+  },
+  "footer": {
+    "name": "ALFONSO MUÑOZ CUESTA",
+    "company": "ATMIRABLE"
+  },
+  "common": {
+    "genericError": "Error loading data"
+  }
+
+}

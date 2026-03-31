@@ -1,6 +1,6 @@
 .detail {
   padding: 24px;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -20,9 +20,13 @@
 
 .detail-card {
   background: white;
-  border: 1px solid #ddd;
   border-radius: 12px;
   padding: 24px;
+}
+
+.detail-header {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 .date {
@@ -32,20 +36,36 @@
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin: 0;
+}
+
+.detail-content {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.description-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.description {
+  line-height: 1.8;
+  margin: 0;
+  font-size: 16px;
+}
+
+.media-section {
+  flex: 1;
+  min-width: 0;
 }
 
 img {
   width: 100%;
-  max-height: 500px;
-  object-fit: cover;
+  height: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
   display: block;
-}
-
-.description {
-  line-height: 1.6;
 }
 
 .status {
@@ -65,7 +85,60 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   text-align: center;
   padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .detail-card {
+    padding: 16px;
+  }
+
+  .detail-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .detail-header {
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+/* Mobile (480px y menos) */
+@media (max-width: 480px) {
+  .detail {
+    padding: 16px;
+  }
+
+  .detail-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .detail-header {
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .image-error-box {
+    min-height: 200px;
+    padding: 12px;
+  }
+
+  .back-button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }

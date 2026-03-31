@@ -1,0 +1,29 @@
+{
+    "header": {
+        "title": "NASA APOD",
+        "subtitle": "Donde termina la Tierra, empieza el asombro."
+    },
+    
+    "dashboard": {
+        "searchPlaceholder": "Buscar por título...",
+        "loading": "Cargando datos...",
+        "noResults": "No se han encontrado resultados para esa búsqueda.",
+        "videoAvailable": "Vídeo disponible"
+    },
+
+    "detail": {
+        "back": "Volver",
+        "loading": "Cargando detalle...",
+        "imageError": "No se ha podido cargar la imagen de este día."
+    },
+
+    "footer": {
+        "name": "ALFONSO MUÑOZ CUESTA",
+        "company": "ATMIRA"
+    },
+    
+    "common": {
+        "genericError": "Error al cargar los datos"
+    }
+
+}

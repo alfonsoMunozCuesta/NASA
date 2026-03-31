@@ -1,15 +1,16 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ApodItem } from '../../../../core/model/apod-item.model';
 import { NasaService } from '../../../../core/services/nasa';
+import { SpanishDatePipe } from '../../../../shared/pipes/spanish-date.pipe';
 
 @Component({
   selector: 'app-detail-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SpanishDatePipe, TranslateModule],
   templateUrl: './detail-page.html',
   styleUrl: './detail-page.css'
 })
@@ -17,9 +18,8 @@ export class DetailPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly nasaService = inject(NasaService);
   private readonly location = inject(Location);
-  private readonly sanitizer = inject(DomSanitizer);
-
-  apod = signal<ApodItem | null>(null);
+  
+  apod = signal<ApodItem | null>(null); 
   loading = signal(true);
   errorMessage = signal('');
   imageFailed = signal(false);
@@ -33,16 +33,16 @@ export class DetailPage implements OnInit {
       return;
     }
 
-    this.nasaService.getApodByDate(date).subscribe({
-      next: (data) => {
-        this.apod.set(data);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.errorMessage.set('Error al cargar el detalle');
-        this.loading.set(false);
-      }
-    });
+    this.nasaService.getApodByDate(date).subscribe({ 
+        next: (data) => {
+          this.apod.set(data);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.errorMessage.set('Error al cargar el detalle');
+          this.loading.set(false);
+        }
+      });
   }
 
   goBack(): void {
@@ -51,15 +51,5 @@ export class DetailPage implements OnInit {
 
   handleDetailImageError(): void {
     this.imageFailed.set(true);
-  }
-
-  safeVideoUrl(): SafeResourceUrl | null {
-    const url = this.apod()?.url;
-
-    if (!url) {
-      return null;
-    }
-
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
