@@ -13,13 +13,14 @@
         type="text"
         class="search-input"
         [placeholder]="'dashboard.searchPlaceholder' | translate"
-        [(ngModel)]="searchText"
+        [value]="searchText()"
+        (input)="onSearchTextChange($any($event.target).value)"
       />
     </div>
 
-    @if (filteredApods().length > 0) {
+    @if (apods().length > 0) {
       <div class="grid">
-        @for (item of filteredApods(); track item.date) {
+        @for (item of apods(); track item.date) {
           <app-dashboard-card [item]="item"></app-dashboard-card>
         }
       </div>
