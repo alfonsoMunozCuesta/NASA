@@ -1,5 +1,8 @@
-<section class="detail">
-  <button class="back-button" (click)="goBack()">{{ 'detail.back' | translate }}</button>
+<section class="detail-shell">
+  <div class="detail-toolbar">
+    <button class="back-button" (click)="goBack()">{{ 'detail.back' | translate }}</button>
+    <span class="detail-chip">APOD Detail</span>
+  </div>
 
   @if (loading()) {
     <p class="status">{{ 'detail.loading' | translate }}</p>
@@ -12,15 +15,12 @@
   @if (!loading() && apod()) {
     <article class="detail-card">
       <div class="detail-header">
+        <p class="eyebrow">Daily astronomy picture</p>
         <p class="date">{{ apod()?.date | spanishDate }}</p>
         <h1>{{ apod()?.title }}</h1>
       </div>
 
       <div class="detail-content">
-        <div class="description-section">
-          <p class="description">{{ apod()?.explanation }}</p>
-        </div>
-
         <div class="media-section">
           @if (!imageFailed()) {
             <img
@@ -33,6 +33,11 @@
               {{ 'detail.imageError' | translate }}
             </div>
           }
+        </div>
+
+        <div class="description-section">
+          <p class="description-label">About this APOD</p>
+          <p class="description">{{ apod()?.explanation }}</p>
         </div>
       </div>
     </article>

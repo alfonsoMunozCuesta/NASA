@@ -4,11 +4,23 @@
 	box-sizing: border-box;
 }
 
+html {
+	background:
+		radial-gradient(circle at top, rgba(71, 133, 255, 0.16), transparent 34%),
+		linear-gradient(180deg, #040915 0%, #07111f 48%, #03070d 100%);
+}
+
 body {
 	margin: 0;
 	font-family: 'Nunito', 'Segoe UI', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background:
+		radial-gradient(circle at top left, rgba(97, 170, 255, 0.14), transparent 24%),
+		radial-gradient(circle at top right, rgba(255, 255, 255, 0.05), transparent 18%),
+		linear-gradient(180deg, #050b17 0%, #08111f 42%, #03070d 100%);
+	color: #eef4ff;
+	min-height: 100vh;
 }
 
 h1,
@@ -19,4 +31,10 @@ h5,
 h6 {
 	font-family: 'Playfair Display', Georgia, serif;
 	letter-spacing: 0.2px;
+	margin-top: 0;
+}
+
+::selection {
+	background: rgba(87, 148, 255, 0.35);
+	color: #ffffff;
 }

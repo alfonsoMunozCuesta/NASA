@@ -1,17 +1,25 @@
 <article class="card" [routerLink]="['/detail', item.date]">
-  <p class="date">{{ item.date | spanishDate }}</p>
+  <div class="card-topline">
+    <span class="tag">APOD</span>
+    <p class="date">{{ item.date | spanishDate }}</p>
+  </div>
 
   @if (!imageFailed()) {
-    <img
-      [src]="item.url"
-      [alt]="item.title"
-      (error)="handleImageError()"
-    />
+    <div class="media-frame">
+      <img
+        [src]="item.url"
+        [alt]="item.title"
+        (error)="handleImageError()"
+      />
+    </div>
   } @else {
-    <div class="image-placeholder">
+    <div class="media-frame image-placeholder">
       No se pudo cargar la imagen
     </div>
   }
 
-  <h2>{{ item.title }}</h2>
+  <div class="card-body">
+    <h2>{{ item.title }}</h2>
+    <p class="excerpt">{{ item.explanation }}</p>
+  </div>
 </article>
